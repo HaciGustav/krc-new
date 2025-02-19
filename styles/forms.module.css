@@ -1,0 +1,46 @@
+.flex {
+  display: flex;
+  column-gap: 8px;
+  width: 100%;
+}
+
+.flex_column {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  width: 100%;
+}
+
+.container {
+  padding-inline: 2rem;
+  padding-block: 1rem;
+}
+
+.dateinput {
+  width: 100%;
+  cursor: pointer;
+}
+.placeholder_div {
+  width: 100%;
+}
+
+.dateinput:required:invalid::-webkit-datetime-edit {
+  color: transparent;
+}
+.dateinput:focus::-webkit-datetime-edit {
+  color: black !important;
+}
+
+@media (max-width: 500px) {
+  .flex_column {
+    row-gap: 10px;
+  }
+  .flex {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+  .placeholder_div {
+    display: none;
+    width: 100%;
+  }
+}
