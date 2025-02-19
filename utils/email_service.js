@@ -449,7 +449,7 @@ export const createMail = (formType, receiver, subject, text, formData) => {
    </div>
  </body>
 `;
-  const stornoBody = `
+  const stornoBody = ` 
  <body>
     <div class="container">
       <div class="header">
@@ -493,7 +493,7 @@ export const createMail = (formType, receiver, subject, text, formData) => {
 
         <p>
           Diese Angaben wurden auf
-          www.krc-k.at
+          ${process.env.MAIN_URL}
           gesendet!
         </p>
       </div>
