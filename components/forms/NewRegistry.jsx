@@ -13,15 +13,17 @@ import {
   Select,
   Checkbox,
   useMediaQuery,
+  Tooltip,
 } from "@mui/material";
 import DateInput from "@/components/form-components/DateInput";
 import useFormCalls from "@/hooks/useFormCalls";
 import { toastWarnNotify } from "@/utils/ToastNotify";
 import { useEffect, useState } from "react";
 import FileInput from "../form-components/FileInput";
+import InfoIcon from "@mui/icons-material/Info";
 
 const NewRegistry = () => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ minWage: true });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
   const screenSmall = useMediaQuery("(max-width:500px)");
@@ -38,12 +40,22 @@ const NewRegistry = () => {
     } else if (type === "file") {
       inputValue = event.target.files[0];
     }
+    const additionalInfo = {};
+    if (name === "salaryForm" && value === "kv") {
+      additionalInfo.salary = "";
+      additionalInfo.minWage = true;
+    } else if (name === "salaryForm" && value !== "kv") {
+      additionalInfo.minWage = false;
+    }
+    console.log(additionalInfo);
 
     setFormData({
       ...formData,
+      ...additionalInfo,
       [name]: inputValue,
     });
   };
+  console.log(formData);
 
   const validateForm = () => {
     let responseFlag = false;
@@ -67,13 +79,14 @@ const NewRegistry = () => {
     event.preventDefault();
     const isValidationOk = validateForm();
     if (isValidationOk) {
-      //  setSubmitButtonDisabled(true);
+      setSubmitButtonDisabled(true);
       sendAnmeldung(formData).then(() => setSubmitButtonDisabled(false));
     }
   };
   const pageHeaderSize = screenSmall ? "1.5rem" : undefined;
   const textfieldSize = screenSmall ? "small" : undefined;
   const typographyFontSize = screenSmall ? "0.67rem" : "medium";
+  const isManualInputSelected = formData?.salaryForm === "manualInput";
   return (
     <form className={css.container} onSubmit={handleSubmit}>
       <Typography variant="h4" sx={{ fontSize: pageHeaderSize }} gutterBottom>
@@ -394,18 +407,49 @@ const NewRegistry = () => {
           <div className={css.placeholder_div} />
         </div>
         <div className={css.flex}>
-          <TextField
-            name="salary"
-            size={textfieldSize}
-            label="Gehalt - Monat (Brutto)"
-            required={!formData.minWage}
-            fullWidth
-            value={formData.salary || ""}
-            onChange={handleChange}
-            disabled={formData.minWage}
-          />
-          <FormControlLabel
-            sx={{ width: "100%" }}
+          <FormControl sx={{ minWidth: 120, width: "calc(100% - 5px)" }}>
+            <InputLabel size={textfieldSize} id="gehalt-select-label">
+              Gehalt
+            </InputLabel>
+            <Select
+              sx={{ width: "100%" }}
+              size={textfieldSize}
+              labelId="gehalt-select-label"
+              id="gehalt-select-small"
+              name="salaryForm"
+              value={formData?.salaryForm || (formData?.minWage && "kv")}
+              label="Gehalt"
+              onChange={handleChange}
+              fullWidth
+            >
+              <MenuItem value={"kv"}>
+                <Typography sx={{ fontSize: typographyFontSize }}>
+                  Mindestlohn
+                </Typography>
+              </MenuItem>
+              <MenuItem value={"manualInput"}>
+                <Typography sx={{ fontSize: typographyFontSize }}>
+                  Manuelle Eingabe
+                </Typography>
+              </MenuItem>
+            </Select>
+          </FormControl>
+          {isManualInputSelected ? (
+            <TextField
+              name="salary"
+              size={textfieldSize}
+              label="Gehalt Manuelle Eingabe (Brutto)"
+              required
+              fullWidth
+              value={formData.salary || ""}
+              onChange={handleChange}
+            />
+          ) : (
+            <div className={css.flex} />
+          )}
+
+          {/* <FormControlLabel
+            // sx={{ width: "100%" }}
             slotProps={{
               typography: { fontSize: typographyFontSize },
             }}
@@ -418,7 +462,7 @@ const NewRegistry = () => {
               />
             }
             label="Gehalt nach Kollektivvertrag"
-          />
+          /> */}
         </div>
         <div className={css.flex}>
           <TextField

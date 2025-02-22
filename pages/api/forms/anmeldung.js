@@ -47,31 +47,30 @@ const handleFormData = async (req, res) => {
 };
 
 const handler = async (req, res) => {
-  const formData = req.body;
-
-  const { fields, attachments } = await handleFormData(req);
-  const receiver = fields.email;
-
-  const subject = `Anmeldung: ${fields.employer} - ${fields.firstnameDN} ${fields.lastnameDN}`;
-  const message = createMail(
-    "anmeldung",
-    receiver,
-    subject,
-    "Empfangsbestätigung",
-    fields
-  );
-  message.attachments = attachments;
-  let transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  });
-
   if (req.method === "POST") {
+    const { fields, attachments } = await handleFormData(req);
+    const receiver = fields.email;
+    console.log({ fields });
+
+    const subject = `Anmeldung: ${fields.employer} - ${fields.firstnameDN} ${fields.lastnameDN}`;
+    const message = createMail(
+      "anmeldung",
+      receiver,
+      subject,
+      "Empfangsbestätigung",
+      fields
+    );
+    message.attachments = attachments;
+    let transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+
     transporter.sendMail(message, (err, info) => {
       if (err) {
         console.log(err);
