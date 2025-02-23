@@ -298,7 +298,7 @@ export const createMail = (formType, receiver, subject, text, formData) => {
 
         <p>
           Diese Angaben wurden über ein Anmeldeformular auf
-          www.krc-k.at
+          ${process.env.MAIN_URL}
           gesendet!
         </p>
       </div>
@@ -357,7 +357,7 @@ export const createMail = (formType, receiver, subject, text, formData) => {
 
         <p>
           Diese Angaben wurden über ein Abmeldeformular auf
-          www.krc-k.at
+          ${process.env.MAIN_URL}
           gesendet!
         </p>
       </div>
@@ -439,7 +439,7 @@ export const createMail = (formType, receiver, subject, text, formData) => {
 
        <p>
          Diese Angaben wurden über ein Änderungsformular auf
-         www.krc-k.at
+         ${process.env.MAIN_URL}
          gesendet!
        </p>
      </div>
