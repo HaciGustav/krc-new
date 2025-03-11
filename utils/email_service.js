@@ -343,7 +343,7 @@ export const createMail = (formType, receiver, subject, text, formData) => {
           <h2>ANGABEN ZUM BESCHÄFTIGUNGSVERHÄLTNIS</h2>
           <p><strong>Abmeldedatum:</strong> ${formData.lastWorkDay || ""}</p> 
           <p><strong>Verbleibende Urlaubstage:</strong> ${
-            formData.remainingHolidays
+            formData?.remainingHolidays || ""
           } </p>
           <p><strong>Kündigungsart:</strong> ${
             formData.terminationType || ""
@@ -512,7 +512,7 @@ export const createMail = (formType, receiver, subject, text, formData) => {
 
   const message = {
     from: "donotreply-formular@krc-k.at",
-    to: [receiver, "office@krc-k.at"],
+    to: [receiver, "office@krc-buchhaltung.at"],
     subject: subject,
     text: text,
     html: template,
