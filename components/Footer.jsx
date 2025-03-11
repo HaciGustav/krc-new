@@ -16,7 +16,9 @@ const Footer = () => {
             <a href="tel:+436601743900">+43 660 174 39 00</a>
             <br />
 
-            <a href="mailto:office@krc-k.at">office@krc-k.at</a>
+            <a href="mailto:office@krc-buchhaltung.at">
+              office@krc-buchhaltung.at
+            </a>
           </p>
         </div>
         <div className={css.footer_section}>
@@ -25,6 +27,8 @@ const Footer = () => {
             Mo-Do: 09:00-14:00
             <br />
             Fr: 09:00-12:00
+            <br />
+            oder nach Terminvereinbarung
           </p>
         </div>
       </div>

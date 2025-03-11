@@ -107,9 +107,18 @@ const Layout = ({ children }) => {
           <div className={css.header_info_div}>
             Großmarktstraße 4, 1230 Wien - Tel:
             <span style={{ paddingInline: "3px" }} />
-            <a href="tel:+43 660 174 39 00 "> +43 660 174 39 00 </a>
+            <a style={{ color: "#fff" }} href="tel:+43 660 174 39 00 ">
+              {" "}
+              +43 660 174 39 00{" "}
+            </a>
             <span style={{ paddingInline: "3px" }}> | </span>
-            <a href="mailto:office@krc-k.at"> office@krc-k.at</a>
+            <a
+              style={{ color: "#fff" }}
+              href="mailto:office@krc-buchhaltung.at"
+            >
+              {" "}
+              office@krc-buchhaltung.at
+            </a>
           </div>
         )}
       </AppBar>
