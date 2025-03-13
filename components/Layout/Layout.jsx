@@ -109,7 +109,10 @@ const Layout = ({ children }) => {
             <span style={{ paddingInline: "3px" }} />
             <a href="tel:+43 660 174 39 00 "> +43 660 174 39 00 </a>
             <span style={{ paddingInline: "3px" }}> | </span>
-            <a href="mailto:office@krc-k.at"> office@krc-k.at</a>
+            <a href="mailto:office@krc-buchhaltung.at">
+              {" "}
+              office@krc-buchhaltung.at
+            </a>
           </div>
         )}
       </AppBar>
