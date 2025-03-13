@@ -511,7 +511,7 @@ export const createMail = (formType, receiver, subject, text, formData) => {
   else if (formType === "storno") template = mailBase(stornoBody);
 
   const message = {
-    from: "donotreply-formular@krc-k.at",
+    from: "donotreply@krc-buchhaltung.at",
     to: [receiver, "office@krc-buchhaltung.at"],
     subject: subject,
     text: text,
