@@ -242,64 +242,65 @@ export const createMail = (formType, receiver, subject, text, formData) => {
 
         <div class="data-section">
           <h2>ANGABEN ZUR PERSON/DIENSTNEHMER</h2>
-          <p><strong>Firma/Dienstgeber:</strong> ${formData.employer || ""}</p>
+          <p><strong>Firma/Dienstgeber:</strong> ${formData?.employer || ""}</p>
           <p><strong>Firma/Betriebsstätte/Arbeitsort:</strong> ${
-            formData.workAddress || ""
+            formData?.workAddress || ""
           }</p>
-          <p><strong>Vorname:</strong> ${formData.firstnameDN || ""}</p>
-          <p><strong>Nachname:</strong> ${formData.lastnameDN || ""}</p>
+          <p><strong>Vorname:</strong> ${formData?.firstnameDN || ""}</p>
+          <p><strong>Nachname:</strong> ${formData?.lastnameDN || ""}</p>
           <p><strong>Versicherungsnummer:</strong> ${
-            formData.insuranceNumberDN || ""
+            formData?.insuranceNumberDN || ""
           }</p>
+           <p><strong>Geburtsdatum:</strong> ${formData?.dob || ""}</p>
           <p><strong>Familienzustand:</strong> ${
-            formData.maritalStatus || ""
+            formData?.maritalStatus || ""
           }</p>
-          <p><strong>Geschlecht:</strong> ${formData.gender || ""}</p>
-          <p><strong>Adresse:</strong> ${formData.address || ""}</p>
-          <p><strong>PLZ Ort:</strong> ${formData.zip || ""} ${
-    formData.city || ""
+          <p><strong>Geschlecht:</strong> ${formData?.gender || ""}</p>
+          <p><strong>Adresse:</strong> ${formData?.address || ""}</p>
+          <p><strong>PLZ Ort:</strong> ${formData?.zip || ""} ${
+    formData?.city || ""
   }</p>
           <p><strong>Staatsbürgerschaft:</strong> ${
-            formData.citizenship || ""
+            formData?.citizenship || ""
           }</p>
         </div>
 
         <div class="data-section">
           <h2>ANGABEN ZUM BESCHÄFTIGUNGSVERHÄLTNIS</h2>
-          <p><strong>Anmeldedatum:</strong> ${formData.firstWorkDay || ""}</p>
+          <p><strong>Anmeldedatum:</strong> ${formData?.firstWorkDay || ""}</p>
           <p><strong>Beschäftigung:</strong> ${
-            formData.jobDescription || ""
+            formData?.jobDescription || ""
           } </p>
-          <p><strong>Gruppe:</strong> ${formData.gruppe || ""}</p>
+          <p><strong>Gruppe:</strong> ${formData?.gruppe || ""}</p>
           <p><strong>Versicherungstyp:</strong> ${
-            formData.insuranceType || ""
+            formData?.insuranceType || ""
           }</p>
           <p><strong>Arbeitszeit pro Woche:</strong> ${
-            formData.workingHours || ""
+            formData?.workingHours || ""
           }</p>
           <p><strong>Monatsgehalt in Euro/Brutto:</strong> ${
-            formData.salary || ""
+            formData?.salary || ""
           } </p>
           <p><strong>Kollektivvertrag:</strong> ${
-            formData.minWage ? "Ja" : "Nein" || ""
+            formData?.minWage ? "Ja" : "Nein" || ""
           } </p>
         </div>
 
         <div class="data-section">
           <h2>ANGABEN DES ZAHLUNGSEMPFÄNGERS</h2>
           
-          <p><strong>IBAN:</strong> ${formData.iban || ""}</p> 
+          <p><strong>IBAN:</strong> ${formData?.iban || ""}</p> 
         </div>
 
         <div class="data-section">
           <h2>SONSTIGE ANGABEN</h2>
-          <p><strong>Notizen:</strong> ${formData.note || ""}</p>
+          <p><strong>Notizen:</strong> ${formData?.note || ""}</p>
         </div>
 
         <p>
-          Diese Angaben wurden über ein Anmeldeformular auf
-          ${process.env.MAIN_URL}
-          gesendet!
+          Diese Angaben wurden über das Anmeldeformular auf <br/> ${
+            process.env.MAIN_URL
+          } übermittelt.
         </p>
       </div>
       <div class="footer">
@@ -328,37 +329,40 @@ export const createMail = (formType, receiver, subject, text, formData) => {
 
         <div class="data-section">
           <h2>ANGABEN ZUR PERSON/DIENSTNEHMER</h2>
-          <p><strong>Firma/Dienstgeber:</strong> ${formData.employer || ""}</p> 
+          <p><strong>Firma/Dienstgeber:</strong> ${
+            formData?.employer || ""
+          }</p> 
           <p><strong>Firma/Betriebsstätte/Arbeitsort:</strong> ${
-            formData.workAddress || ""
+            formData?.workAddress || ""
           }</p>
-          <p><strong>Vorname:</strong> ${formData.firstnameDN || ""}</p> 
-          <p><strong>Nachname:</strong> ${formData.lastnameDN || ""}</p> 
+          <p><strong>Vorname:</strong> ${formData?.firstnameDN || ""}</p> 
+          <p><strong>Nachname:</strong> ${formData?.lastnameDN || ""}</p> 
           <p><strong>Versicherungsnummer:</strong> ${
-            formData.insuranceNumberDN || ""
+            formData?.insuranceNumberDN || ""
           }</p>
+           <p><strong>Geburtsdatum:</strong> ${formData?.dob || ""}</p>
         </div>
 
         <div class="data-section">
           <h2>ANGABEN ZUM BESCHÄFTIGUNGSVERHÄLTNIS</h2>
-          <p><strong>Abmeldedatum:</strong> ${formData.lastWorkDay || ""}</p> 
-          <p><strong>Verbleibende Urlaubstage:</strong> ${
-            formData.remainingHolidays
+          <p><strong>Abmeldedatum:</strong> ${formData?.lastWorkDay || ""}</p> 
+          <p><strong>Resturlaub vorhanden:</strong> ${
+            formData?.remainingHolidays || ""
           } </p>
           <p><strong>Kündigungsart:</strong> ${
-            formData.terminationType || ""
+            formData?.terminationType || ""
           }</p> 
         </div>
 
         <div class="data-section">
           <h2>SONSTIGE ANGABEN</h2>
-          <p><strong>Notizen:</strong> ${formData.note || ""}</p> 
+          <p><strong>Notizen:</strong> ${formData?.note || ""}</p> 
         </div>
 
         <p>
-          Diese Angaben wurden über ein Abmeldeformular auf
-          ${process.env.MAIN_URL}
-          gesendet!
+          Diese Angaben wurden über das Abmeldeformular auf <br/> ${
+            process.env.MAIN_URL
+          } übermittelt.
         </p>
       </div>
       <div class="footer">
@@ -387,60 +391,61 @@ export const createMail = (formType, receiver, subject, text, formData) => {
 
        <div class="data-section">
          <h2>ANGABEN ZUR PERSON/DIENSTNEHMER</h2>
-         <p><strong>Firma/Dienstgeber:</strong> ${formData.employer || ""}</p> 
+         <p><strong>Firma/Dienstgeber:</strong> ${formData?.employer || ""}</p> 
          <p><strong>Firma/Betriebsstätte/Arbeitsort:</strong> ${
-           formData.workAddress || ""
+           formData?.workAddress || ""
          }</p>
-         <p><strong>Vorname:</strong> ${formData.firstnameDN || ""}</p> 
-         <p><strong>Nachname:</strong> ${formData.lastnameDN || ""}</p> 
+         <p><strong>Vorname:</strong> ${formData?.firstnameDN || ""}</p> 
+         <p><strong>Nachname:</strong> ${formData?.lastnameDN || ""}</p> 
          <p><strong>Versicherungsnummer:</strong> ${
-           formData.insuranceNumberDN || ""
+           formData?.insuranceNumberDN || ""
          }</p>
-         <p><strong>Adresse:</strong> ${formData.address || ""}</p> 
-         <p><strong>PLZ Ort:</strong> ${formData.zip || ""} ${
-    formData.city || ""
+          <p><strong>Geburtsdatum:</strong> ${formData?.dob || ""}</p>
+         <p><strong>Adresse:</strong> ${formData?.address || ""}</p> 
+         <p><strong>PLZ Ort:</strong> ${formData?.zip || ""} ${
+    formData?.city || ""
   }</p> 
          <p><strong>Staatsbürgerschaft:</strong> ${
-           formData.citizenship || ""
+           formData?.citizenship || ""
          }</p>
        </div>
 
        <div class="data-section">
          <h2>ANGABEN ZUM BESCHÄFTIGUNGSVERHÄLTNIS</h2>
-         <p><strong>Anmeldedatum:</strong> ${formData.firstWorkDay || ""}</p> 
+         <p><strong>Anmeldedatum:</strong> ${formData?.firstWorkDay || ""}</p> 
          <p><strong>Beschäftigung:</strong> ${
-           formData.jobDescription || ""
+           formData?.jobDescription || ""
          } </p> 
-         <p><strong>Gruppe:</strong> ${formData.gruppe || ""}</p> 
+         <p><strong>Gruppe:</strong> ${formData?.gruppe || ""}</p> 
          <p><strong>Versicherungstyp:</strong> ${
-           formData.insuranceType || ""
+           formData?.insuranceType || ""
          }</p> 
          <p><strong>Arbeitszeit pro Woche:</strong> ${
-           formData.workingHours || ""
+           formData?.workingHours || ""
          }</p> 
          <p><strong>Monatsgehalt in Euro/Brutto:</strong> ${
-           formData.salary || ""
+           formData?.salary || ""
          } </p>
        </div>
 
        <div class="data-section">
          <h2>ANGABEN DES ZAHLUNGSEMPFÄNGERS</h2>
          
-         <p><strong>IBAN:</strong> ${formData.iban || ""}</p> 
+         <p><strong>IBAN:</strong> ${formData?.iban || ""}</p> 
        </div>
 
        <div class="data-section">
          <h2>SONSTIGE ANGABEN</h2>
          <p><strong>Änderungszweck:</strong> ${
-           formData.changingPurpose || ""
+           formData?.changingPurpose || ""
          }</p> 
-         <p><strong>Notizen:</strong> ${formData.note || ""}</p> 
+         <p><strong>Notizen:</strong> ${formData?.note || ""}</p> 
        </div>
 
        <p>
-         Diese Angaben wurden über ein Änderungsformular auf
-         ${process.env.MAIN_URL}
-         gesendet!
+         Diese Angaben wurden über das Änderungsformular auf <br/> ${
+           process.env.MAIN_URL
+         } übermittelt.
        </p>
      </div>
      <div class="footer">
@@ -469,32 +474,35 @@ export const createMail = (formType, receiver, subject, text, formData) => {
 
         <div class="data-section">
           <h2>ANGABEN ZUR PERSON/DIENSTNEHMER</h2>
-          <p><strong>Firma/Dienstgeber:</strong> ${formData.employer || ""}</p> 
+          <p><strong>Firma/Dienstgeber:</strong> ${
+            formData?.employer || ""
+          }</p> 
           <p><strong>Firma/Betriebsstätte/Arbeitsort:</strong> ${
-            formData.workAddress || ""
+            formData?.workAddress || ""
           }</p>
-          <p><strong>Vorname:</strong> ${formData.firstnameDN || ""}</p> 
-          <p><strong>Nachname:</strong> ${formData.lastnameDN || ""}</p> 
+          <p><strong>Vorname:</strong> ${formData?.firstnameDN || ""}</p> 
+          <p><strong>Nachname:</strong> ${formData?.lastnameDN || ""}</p> 
           <p><strong>Versicherungsnummer:</strong> ${
-            formData.insuranceNumberDN || ""
+            formData?.insuranceNumberDN || ""
           }</p>
+           <p><strong>Geburtsdatum:</strong> ${formData?.dob || ""}</p>
           <p><strong>An oder Abmeldung:</strong> ${
-            formData.cancellationType || ""
+            formData?.cancellationType || ""
           }</p>
           <p><strong>Gesendete Nachricht Datum:</strong> ${
-            formData.mailSentAt || ""
+            formData?.mailSentAt || ""
           }</p>
         </div>
 
         <div class="data-section">
           <h2>SONSTIGE ANGABEN</h2>
-          <p><strong>Notizen:</strong> ${formData.note || ""}</p> 
+          <p><strong>Notizen:</strong> ${formData?.note || ""}</p> 
         </div>
 
         <p>
-          Diese Angaben wurden auf
+          Diese Angaben wurden auf <br/>
           ${process.env.MAIN_URL}
-          gesendet!
+          übermittelt.
         </p>
       </div>
       <div class="footer">
