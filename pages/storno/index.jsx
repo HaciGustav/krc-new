@@ -46,10 +46,7 @@ const requiredFields = [
     fieldName: "insuranceNumberDN",
     fieldCaption: "Versicherungsnummer",
   },
-  {
-    fieldName: "dob",
-    fieldCaption: "Geburtsdatum",
-  },
+
   {
     fieldName: "cancellationType",
     fieldCaption: "Stornierung von - ",

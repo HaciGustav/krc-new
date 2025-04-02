@@ -42,10 +42,7 @@ const requiredFields = [
     fieldName: "insuranceNumberDN",
     fieldCaption: "Versicherungsnummer",
   },
-  {
-    fieldName: "dob",
-    fieldCaption: "Geburtsdatum",
-  },
+
   {
     fieldName: "lastWorkDay",
     fieldCaption: "Abmeldedatum (Letzter Arbeitstag)",

@@ -43,10 +43,7 @@ const requiredFields = [
     fieldName: "insuranceNumberDN",
     fieldCaption: "Versicherungsnummer",
   },
-  {
-    fieldName: "dob",
-    fieldCaption: "Geburtsdatum",
-  },
+
   {
     fieldName: "changingPurpose",
     fieldCaption: "Änderungszweck",
