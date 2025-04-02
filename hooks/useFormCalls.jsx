@@ -22,7 +22,7 @@ const useFormCalls = () => {
       toastSuccessNotify(`Eingabe erfolgreich gesendet`);
 
       setTimeout(() => {
-        //  router.push("/");
+        router.push("/");
       }, 1000);
     } catch (error) {
       console.log(error);
@@ -44,7 +44,7 @@ const useFormCalls = () => {
       );
       toastSuccessNotify(`Eingabe erfolgreich gesendet`);
       setTimeout(() => {
-        //  router.push("/");
+        router.push("/");
       }, 1000);
     } catch (error) {
       if (error.response.data?.error?.includes("No recipients defined")) {
@@ -65,7 +65,7 @@ const useFormCalls = () => {
       );
       toastSuccessNotify(`Eingabe erfolgreich gesendet`);
       setTimeout(() => {
-        //  router.push("/");
+        router.push("/");
       }, 1000);
     } catch (error) {
       if (error.response.data?.error?.includes("No recipients defined")) {
@@ -83,7 +83,7 @@ const useFormCalls = () => {
       const data = await axios.post(BASE_URL + "/api/forms/storno", formData);
       toastSuccessNotify(`Eingabe erfolgreich gesendet`);
       setTimeout(() => {
-        //  router.push("/");
+        router.push("/");
       }, 1000);
     } catch (error) {
       if (error.response.data?.error?.includes("No recipients defined")) {
