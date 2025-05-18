@@ -60,10 +60,6 @@ const requiredFields = [
     fieldCaption: "Staatsbürgerschaft",
   },
   {
-    fieldName: "iban",
-    fieldCaption: "IBAN",
-  },
-  {
     fieldName: "firstWorkDay",
     fieldCaption: "Anmeldedatum 1. Arbeitstag",
   },

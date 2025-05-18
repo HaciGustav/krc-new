@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { terminalArt } from "@/utils/devCredentials";
+import dynamic from "next/dynamic";
 
 export default function Home() {
   console.log(terminalArt);
@@ -17,6 +18,7 @@ export default function Home() {
       </Head>
       <Header />
       {/* <main style={{ padding: "1.5rem" }}></main> */}
+
       <Footer />
     </>
   );
