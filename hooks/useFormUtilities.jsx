@@ -1,6 +1,6 @@
 import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
-const initModalProps = { open: false, fieldCaption: "" };
+const initModalProps = { open: false, fieldCaption: "", message: "" };
 
 const useFormUtilities = () => {
   const [warningModalProps, setWarningModalProps] = useState(initModalProps);
@@ -10,6 +10,17 @@ const useFormUtilities = () => {
   const validateForm = (requiredFields, formData) => {
     for (const { fieldName, fieldCaption } of requiredFields) {
       const fieldValue = formData[fieldName];
+      if (fieldName == "insuranceNumberDN") {
+        const isvalid = /^\d{10}$/.test(fieldValue);
+        if (!isvalid) {
+          setWarningModalProps({
+            open: true,
+            fieldCaption,
+            message: "Versicherungsnummer ist ungültig!",
+          });
+          return false;
+        }
+      }
       if (
         fieldValue === "" ||
         fieldValue === undefined ||

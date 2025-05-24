@@ -47,19 +47,23 @@ const ValidationWarningModal = ({ modalProps, handleClose }) => {
               className={css.flex}
               style={{ justifyContent: "center", alignItems: "center" }}
             >
-              <Typography>
-                Das Feld{" "}
-                <span
-                  style={{
-                    fontWeight: "600",
-                    fontSize: "large",
-                    color: "#ba1414",
-                  }}
-                >
-                  <em>{modalProps?.fieldCaption || ""}</em>
-                </span>{" "}
-                ist erforderlich
-              </Typography>
+              {modalProps.message ? (
+                <Typography> {modalProps.message}</Typography>
+              ) : (
+                <Typography>
+                  Das Feld{" "}
+                  <span
+                    style={{
+                      fontWeight: "600",
+                      fontSize: "large",
+                      color: "#ba1414",
+                    }}
+                  >
+                    <em>{modalProps?.fieldCaption || ""}</em>
+                  </span>{" "}
+                  ist erforderlich
+                </Typography>
+              )}
               <WarningAmberIcon
                 sx={{
                   fontSize: "5rem",

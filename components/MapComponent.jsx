@@ -1,10 +1,11 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
+const position = [48.14413254104794, 16.365309324616145];
 const MapComponent = () => {
-  const position = [48.14413254104794, 16.365309324616145];
+  const linkRef = useRef(null);
 
   useEffect(() => {
     // Fix for default marker icons in Leaflet with Next.js
@@ -20,20 +21,36 @@ const MapComponent = () => {
   }, []);
 
   return (
-    <MapContainer
-      center={position}
-      zoom={13}
-      scrollWheelZoom={true}
-      style={{ height: "300px", width: "100%" }}
-    >
-      <TileLayer
-        attribution=""
-        url="https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png"
-      />
-      <Marker position={position}>
-        <Popup>KRC Buchhaltungskanzlei</Popup>
-      </Marker>
-    </MapContainer>
+    <>
+      <a
+        href="https://www.google.com/maps?q=48.14413254104794, 16.365309324616145"
+        target="_blank"
+        ref={linkRef}
+      ></a>
+
+      <MapContainer
+        center={position}
+        zoom={13}
+        scrollWheelZoom={true}
+        style={{ height: "300px", width: "100%" }}
+      >
+        <TileLayer
+          attribution=""
+          url="https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png"
+        />
+        <Marker
+          position={position}
+          eventHandlers={{
+            click: () => {
+              console.log("marker clicked");
+              linkRef.current.click();
+            },
+          }}
+        >
+          <Popup> KRC Buchhaltungskanzlei</Popup>
+        </Marker>
+      </MapContainer>
+    </>
   );
 };
 
