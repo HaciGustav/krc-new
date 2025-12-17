@@ -18,6 +18,7 @@ import useFormCalls from "@/hooks/useFormCalls";
 import useFormUtilities from "@/hooks/useFormUtilities";
 import ValidationWarningModal from "@/components/form-components/ValidationWarningModal";
 import SectionTitle from "@/components/form-components/SectionTitle";
+import FormLayout from "@/components/FormLayout";
 const requiredFields = [
   {
     fieldName: "employer",
@@ -99,7 +100,7 @@ const Abmeldung = () => {
   };
 
   return (
-    <>
+    <FormLayout>
       <ValidationWarningModal
         modalProps={warningModalProps}
         handleClose={handleCloseModal}
@@ -303,7 +304,7 @@ const Abmeldung = () => {
           </div>
         </div>
       </form>
-    </>
+    </FormLayout>
   );
 };
 

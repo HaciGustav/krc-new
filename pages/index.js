@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { terminalArt } from "@/utils/devCredentials";
 import dynamic from "next/dynamic";
+import LandingPage from "@/components/Homepage";
 
 export default function Home() {
   console.log(terminalArt);
@@ -16,10 +17,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
-      {/* <main style={{ padding: "1.5rem" }}></main> */}
-
-      <Footer />
+      <LandingPage />
+      {/* <Header />
+      <Footer /> */}
     </>
   );
 }

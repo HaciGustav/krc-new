@@ -18,6 +18,7 @@ import useFormCalls from "@/hooks/useFormCalls";
 import useFormUtilities from "@/hooks/useFormUtilities";
 import ValidationWarningModal from "@/components/form-components/ValidationWarningModal";
 import SectionTitle from "@/components/form-components/SectionTitle";
+import FormLayout from "@/components/FormLayout";
 
 const requiredFields = [
   {
@@ -88,7 +89,7 @@ const Aenderung = () => {
   };
 
   return (
-    <>
+    <FormLayout>
       <ValidationWarningModal
         modalProps={warningModalProps}
         handleClose={handleCloseModal}
@@ -416,7 +417,7 @@ const Aenderung = () => {
           </Button>
         </div>
       </form>
-    </>
+    </FormLayout>
   );
 };
 
