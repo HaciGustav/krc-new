@@ -105,7 +105,7 @@ const Layout = ({ children }) => {
 
         {!screenMedium && (
           <div className={css.header_info_div}>
-            Großmarktstraße 4, 1230 Wien - Tel:
+            Oberlaaer Straße 191/4, 1100 Wien - Tel:
             <span style={{ paddingInline: "3px" }} />
             <a style={{ color: "#fff" }} href="tel:+43 660 174 39 00 ">
               {" "}

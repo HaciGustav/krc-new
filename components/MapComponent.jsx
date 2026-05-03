@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useRef } from "react";
 
-const position = [48.14413254104794, 16.365309324616145];
+const position = [48.141283617898104, 16.387249375626386];
 const MapComponent = () => {
   const linkRef = useRef(null);
 
@@ -23,7 +23,8 @@ const MapComponent = () => {
   return (
     <>
       <a
-        href="https://www.google.com/maps?q=48.14413254104794, 16.365309324616145"
+        href="https://www.google.com/maps/place/Oberlaaer+Str.+191%2F4,+1100+Wien/@48.1412547,16.3846706,17z/data=!3m1!4b1!4m5!3m4!1s0x476da97bddaa07eb:0xffaa6f6140182466!8m2!3d48.1412511!4d16.3872509?entry=ttu&g_ep=EgoyMDI2MDQyOS4wIKXMDSoASAFQAw%3D%3D"
+        // href="https://www.google.com/maps?q=48.14413254104794, 16.365309324616145"
         target="_blank"
         ref={linkRef}
       ></a>

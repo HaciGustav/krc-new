@@ -19,9 +19,9 @@ const Footer = () => {
               <h2>KRC</h2>
               <p>Buchhaltungskanzlei KG</p>
               <p>
-                Großmarktstraße 4,
+                Oberlaaer Straße 191/4,
                 <br />
-                1230 Wien
+                1100 Wien
               </p>
               <p>
                 <a href="tel:+436601743900">+43 660 174 39 00</a>
