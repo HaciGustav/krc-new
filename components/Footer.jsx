@@ -19,7 +19,7 @@ const Footer = () => {
               <h2>KRC</h2>
               <p>Buchhaltungskanzlei KG</p>
               <p>
-                Oberlaaaer Straße 191/4,
+                Oberlaaer Straße 191/4,
                 <br />
                 1100 Wien
               </p>
