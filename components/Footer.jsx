@@ -35,7 +35,7 @@ const Footer = () => {
             <div className={css.footer_section}>
               <h2>ÖFFNUNGSZEITEN</h2>
               <p>
-                Mo-Do: 09:00-14:00
+                Mo-Do: 09:00-12:00 und 13:00-15:30
                 <br />
                 Fr: 09:00-12:00
                 <br />

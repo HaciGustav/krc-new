@@ -258,8 +258,8 @@ export const createMail = (formType, receiver, subject, text, formData) => {
           <p><strong>Geschlecht:</strong> ${formData?.gender || ""}</p>
           <p><strong>Adresse:</strong> ${formData?.address || ""}</p>
           <p><strong>PLZ Ort:</strong> ${formData?.zip || ""} ${
-    formData?.city || ""
-  }</p>
+            formData?.city || ""
+          }</p>
           <p><strong>Staatsbürgerschaft:</strong> ${
             formData?.citizenship || ""
           }</p>
@@ -403,8 +403,8 @@ export const createMail = (formType, receiver, subject, text, formData) => {
           <p><strong>Geburtsdatum:</strong> ${formData?.dob || ""}</p>
          <p><strong>Adresse:</strong> ${formData?.address || ""}</p> 
          <p><strong>PLZ Ort:</strong> ${formData?.zip || ""} ${
-    formData?.city || ""
-  }</p> 
+           formData?.city || ""
+         }</p> 
          <p><strong>Staatsbürgerschaft:</strong> ${
            formData?.citizenship || ""
          }</p>
@@ -520,7 +520,7 @@ export const createMail = (formType, receiver, subject, text, formData) => {
 
   const message = {
     from: "donotreply@krc-buchhaltung.at",
-    to: [receiver, "office@krc-buchhaltung.at"],
+    to: [receiver, "office@krc-buchhaltung.at", "lohn@krc-buchhaltung.at"],
     subject: subject,
     text: text,
     html: template,
