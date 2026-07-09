@@ -3,16 +3,11 @@ import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import CloseIcon from "@mui/icons-material/Close";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 import SidebarList from "./List";
 import {
   AppBar,
@@ -22,15 +17,15 @@ import {
   drawerWidth,
 } from "./LayoutComponents";
 import Link from "next/link";
+import { useMediaQuery } from "@mui/material";
 
 import css from "@/styles/layout.module.css";
-import { useMediaQuery } from "@mui/material";
-import Footer from "../Footer";
 
 const Layout = ({ children }) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const screenMedium = useMediaQuery("(max-width:800px)");
+
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
@@ -40,17 +35,18 @@ const Layout = ({ children }) => {
   }, [screenMedium]);
 
   return (
-    <Box sx={{ display: "flex" }}>
+    // Wrapping everything in a box that takes up the full screen height
+    <Box sx={{ display: "flex", minHeight: "100vh" }}>
       <CssBaseline />
+      
+      {/* THE TOP PURPLE HEADER BAR */}
       <AppBar
         sx={{
           height: drawerHeight,
           backgroundColor: "#692046",
-          // display: "flex",
-          // alignItems: "center",
-          // justifyContent: "flex-start",
         }}
       >
+        {/* Mobile view layout for the top bar */}
         {screenMedium && (
           <div
             style={{
@@ -83,46 +79,33 @@ const Layout = ({ children }) => {
                 borderRadius: "25%",
               }}
             >
-              <img style={{ width: "2rem" }} src="/assets/logo.svg" />
+              <img style={{ width: "2rem" }} src="/assets/logo.svg" alt="Logo" />
             </Link>
 
-            <h3 style={{ fontSize: "0.7rem", textAlign: "center" }}>
-              <span
-                style={{
-                  fontSize: "0.7rem",
-                  // display: "block",
-                  // width: "100%",
-                  padding: "0",
-                }}
-              >
-                {" "}
-                KRC{" "}
-              </span>{" "}
+            <h3 style={{ fontSize: "0.7rem", textAlign: "center", margin: 0 }}>
+              <span style={{ fontSize: "0.7rem", padding: "0" }}>KRC </span>
               Buchhaltungskanzlei KG
             </h3>
           </div>
         )}
 
+        {/* Desktop view layout for the top bar (contact info) */}
         {!screenMedium && (
-          <div className={css.header_info_div}>
+          <div className={css.header_info_div} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', height: '100%', paddingRight: '20px' }}>
             Oberlaaer Straße 191/4, 1100 Wien - Tel:
             <span style={{ paddingInline: "3px" }} />
-            <a style={{ color: "#fff" }} href="tel:+43 660 174 39 00 ">
-              {" "}
-              +43 660 174 39 00{" "}
+            <a style={{ color: "#fff", textDecoration: "none" }} href="tel:+436601743900">
+              +43 660 174 39 00
             </a>
             <span style={{ paddingInline: "3px" }}> | </span>
-            <a
-              style={{ color: "#fff" }}
-              href="mailto:office@krc-buchhaltung.at"
-            >
-              {" "}
+            <a style={{ color: "#fff", textDecoration: "none" }} href="mailto:office@krc-buchhaltung.at">
               office@krc-buchhaltung.at
             </a>
           </div>
         )}
       </AppBar>
 
+      {/* THE LEFT SIDEBAR MENU */}
       <Drawer
         sx={{
           width: drawerWidth,
@@ -131,6 +114,8 @@ const Layout = ({ children }) => {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            // Force the background to be white so we don't get that weird yellow/transparent glitch
+            backgroundColor: "#fff", 
           },
         }}
         variant="persistent"
@@ -149,9 +134,9 @@ const Layout = ({ children }) => {
           }}
         >
           <Link href={"/"} style={{ textDecoration: "none" }}>
-            <img style={{ width: "8rem" }} src="/assets/logo.svg" />
+            <img style={{ width: "8rem" }} src="/assets/logo.svg" alt="Logo" />
           </Link>
-          <h3 style={{ color: "#000", fontSize: "1rem", textAlign: "center" }}>
+          <h3 style={{ color: "#000", fontSize: "1rem", textAlign: "center", margin: 0 }}>
             <span
               style={{
                 fontSize: "1.5rem",
@@ -160,23 +145,65 @@ const Layout = ({ children }) => {
                 padding: "0",
               }}
             >
-              {" "}
-              KRC{" "}
-            </span>{" "}
+              KRC
+            </span>
             Buchhaltungskanzlei KG
           </h3>
         </div>
 
         <Divider />
-
         <SidebarList />
-        {/* <Divider /> */}
       </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-        {children}
+
+      {/* THE MAIN CONTENT AREA ON THE RIGHT */}
+      <Main open={open} sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%' }}>
+        {/* This creates empty space so our content doesn't hide behind the top bar */}
+        <DrawerHeader /> 
+        
+        {/* --- HOLIDAY ALERT NOTIFICATION --- */}
+        <Box 
+          sx={{
+            // THESE 4 LINES MAKE IT STICKY:
+            position: "sticky",      // Makes it stick to the screen when scrolling down
+            top: "10px",             // Keeps a 10px distance from the top edge when scrolling
+            zIndex: 50,              // Ensures it stays ON TOP of other content (like the header image)
+            boxShadow: "0px 4px 12px rgba(0,0,0,0.15)", // Adds a nice shadow to make it pop out
+            
+            backgroundColor: "#f8d7da",
+            border: "1px solid #f5c6cb",
+            borderRadius: "5px",
+            padding: "15px 20px",
+            margin: "20px", // Breathing room around the box initially
+            display: "flex",
+            alignItems: "center",
+            gap: "15px",
+            color: "#721c24"
+          }}
+        >
+          {/* We use a clean SVG warning icon here instead of an emoji */}
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            viewBox="0 0 24 24" 
+            fill="#721c24" 
+            style={{ width: "24px", height: "24px", flexShrink: 0 }}
+          >
+            <path d="M12 2L1 21h22L12 2zm0 3.45l8.4 14.55H3.6L12 5.45zM11 10h2v5h-2v-5zm0 6h2v2h-2v-2z"/>
+          </svg>
+          
+          <Typography sx={{ fontWeight: "bold", fontFamily: "sans-serif" }}>
+            Betriebsurlaub: Von 15.08.2026 bis 31.08.2026 findet keine Bearbeitung statt. 
+          </Typography>
+        </Box>
+        {/* ---------------------------------- */}
+
+        {/* Render the actual page content below our alert */}
+        <Box sx={{ flexGrow: 1 }}>
+            {children} 
+        </Box>
+        
       </Main>
     </Box>
   );
 };
+
 export default Layout;
