@@ -1,10 +1,8 @@
 import styled from "@emotion/styled";
 import Switch from "@mui/material/Switch";
-import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import React from "react";
+import { useTranslation } from "react-i18next";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -53,20 +51,33 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const LangSwitch = () => {
-  const router = useRouter();
-  const { locale } = router;
+  const { i18n } = useTranslation();
+
+  const isTurkish = i18n.language === "tr";
+
+  const toggleLanguage = (event) => {
+    const newLang = event.target.checked ? "tr" : "de";
+    i18n.changeLanguage(newLang);
+    // HIER WIRD DIE SPRACHE GESPEICHERT:
+    localStorage.setItem("krc_language", newLang);
+  };
 
   return (
-    <Link href={router.pathname} locale={locale === "de" ? "tr" : "de"}>
-      <FormControlLabel
-        sx={{
-          opacity: "0.4",
-          transition: "opacity 0.3s ",
-          "&:hover": { opacity: "1" },
-        }}
-        control={<MaterialUISwitch sx={{ m: 1 }} checked={locale === "tr"} />}
-      />
-    </Link>
+    <FormControlLabel
+      sx={{
+        opacity: "0.6",
+        transition: "opacity 0.3s ",
+        "&:hover": { opacity: "1" },
+        margin: 0,
+      }}
+      control={
+        <MaterialUISwitch 
+          sx={{ m: 1 }} 
+          checked={isTurkish} 
+          onChange={toggleLanguage} 
+        />
+      }
+    />
   );
 };
 

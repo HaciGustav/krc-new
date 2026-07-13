@@ -17,75 +17,29 @@ import FileInput from "../form-components/FileInput";
 import ValidationWarningModal from "../form-components/ValidationWarningModal";
 import useFormUtilities from "@/hooks/useFormUtilities";
 import SectionTitle from "../form-components/SectionTitle";
+import { useTranslation } from "react-i18next";
 
 const requiredFields = [
-  {
-    fieldName: "employer",
-    fieldCaption: "Dienstgeber",
-  },
-  {
-    fieldName: "workAddress",
-    fieldCaption: "Betriebstätte (Arbeitsort)",
-  },
-  {
-    fieldName: "email",
-    fieldCaption: "Firmen e-mail",
-  },
-  {
-    fieldName: "firstnameDN",
-    fieldCaption: "Vorname DN",
-  },
-  {
-    fieldName: "lastnameDN",
-    fieldCaption: "Nachname DN",
-  },
-  {
-    fieldName: "insuranceNumberDN",
-    fieldCaption: "Versicherungsnummer DN",
-  },
-  {
-    fieldName: "address",
-    fieldCaption: "Adresse",
-  },
-  {
-    fieldName: "zip",
-    fieldCaption: "PLZ",
-  },
-  {
-    fieldName: "city",
-    fieldCaption: "Ort",
-  },
-  {
-    fieldName: "citizenship",
-    fieldCaption: "Staatsbürgerschaft",
-  },
-  {
-    fieldName: "firstWorkDay",
-    fieldCaption: "Anmeldedatum 1. Arbeitstag",
-  },
-  {
-    fieldName: "jobDescription",
-    fieldCaption: "Tätigkeit",
-  },
-  {
-    fieldName: "workingHours",
-    fieldCaption: "Arbeitszeit (Stunden-Woche)",
-  },
-  {
-    fieldName: "gruppe",
-    fieldCaption: "Gruppe",
-  },
-  {
-    fieldName: "insuranceType",
-    fieldCaption: "Versicherungstyp",
-  },
-  {
-    fieldName: "confirmation",
-    fieldCaption: "DSVGO (Datenschutzerklärung)",
-  },
+  { fieldName: "employer", fieldCaption: "forms.employer" },
+  { fieldName: "workAddress", fieldCaption: "forms.workAddress" },
+  { fieldName: "email", fieldCaption: "forms.email" },
+  { fieldName: "firstnameDN", fieldCaption: "forms.firstNameEmployee" },
+  { fieldName: "lastnameDN", fieldCaption: "forms.lastNameEmployee" },
+  { fieldName: "insuranceNumberDN", fieldCaption: "forms.insuranceNumber" },
+  { fieldName: "address", fieldCaption: "forms.address" },
+  { fieldName: "zip", fieldCaption: "forms.zip" },
+  { fieldName: "city", fieldCaption: "forms.city" },
+  { fieldName: "citizenship", fieldCaption: "forms.citizenship" },
+  { fieldName: "firstWorkDay", fieldCaption: "forms.registrationDate" },
+  { fieldName: "jobDescription", fieldCaption: "forms.jobDescription" },
+  { fieldName: "workingHours", fieldCaption: "forms.workingHours" },
+  { fieldName: "gruppe", fieldCaption: "forms.group" },
+  { fieldName: "insuranceType", fieldCaption: "forms.insuranceType" },
+  { fieldName: "confirmation", fieldCaption: "forms.dsvgo" },
 ];
 
 const NewRegistry = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({ minWage: true });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
@@ -104,7 +58,6 @@ const NewRegistry = () => {
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-
     let inputValue = value;
 
     if (type === "checkbox") {
@@ -129,7 +82,12 @@ const NewRegistry = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const isValidationOk = validateForm(requiredFields, formData);
+    const localizedRequiredFields = requiredFields.map(f => ({
+      ...f,
+      fieldCaption: t(f.fieldCaption)
+    }));
+    
+    const isValidationOk = validateForm(localizedRequiredFields, formData);
     if (isValidationOk) {
       setSubmitButtonDisabled(true);
       sendAnmeldung(formData).then(() => setSubmitButtonDisabled(false));
@@ -145,27 +103,24 @@ const NewRegistry = () => {
       />
       <form className={css.container} onSubmit={handleSubmit}>
         <Typography variant="h4" sx={{ fontSize: pageHeaderSize }} gutterBottom>
-          Anmeldeformular
+          {t("forms.registration")}
         </Typography>{" "}
         <div className={css.flex_column}>
           <div className={css.form_section}>
-            <SectionTitle title={"Firmendaten/Dienstgeber"} />
+            <SectionTitle title={t("forms.companyData")} />
             <div className={css.flex}>
               <TextField
                 size={textfieldSize}
                 name="employer"
-                label="Dienstgeber"
-                //required
+                label={t("forms.employer")}
                 fullWidth
                 value={formData.employer || ""}
                 onChange={handleChange}
               />
-
               <TextField
                 name="workAddress"
                 size={textfieldSize}
-                label="Betriebstätte (Arbeitsort)"
-                //required
+                label={t("forms.workAddress")}
                 fullWidth
                 value={formData.workAddress || ""}
                 onChange={handleChange}
@@ -175,11 +130,8 @@ const NewRegistry = () => {
               <TextField
                 name="email"
                 size={textfieldSize}
-                label="Firmen e-mail"
-                //required
-                inputProps={{
-                  type: "email",
-                }}
+                label={t("forms.email")}
+                inputProps={{ type: "email" }}
                 fullWidth
                 value={formData.email || ""}
                 onChange={handleChange}
@@ -188,14 +140,12 @@ const NewRegistry = () => {
             </div>
           </div>
           <div className={css.form_section}>
-            <SectionTitle title={"Dienstnehmer/in - Arbeiter/in Daten"} />
-
+            <SectionTitle title={t("forms.employeeData")} />
             <div className={css.flex}>
               <TextField
                 name="firstnameDN"
                 size={textfieldSize}
-                label="Vorname DN"
-                //required
+                label={t("forms.firstNameEmployee")}
                 fullWidth
                 value={formData.firstnameDN || ""}
                 onChange={handleChange}
@@ -203,8 +153,7 @@ const NewRegistry = () => {
               <TextField
                 name="lastnameDN"
                 size={textfieldSize}
-                label="Nachname DN"
-                //required
+                label={t("forms.lastNameEmployee")}
                 fullWidth
                 value={formData.lastnameDN || ""}
                 onChange={handleChange}
@@ -214,8 +163,7 @@ const NewRegistry = () => {
               <TextField
                 name="insuranceNumberDN"
                 size={textfieldSize}
-                label="Versicherungsnummer DN"
-                //required
+                label={t("forms.insuranceNumber")}
                 fullWidth
                 value={formData.insuranceNumberDN || ""}
                 onChange={handleChange}
@@ -223,16 +171,15 @@ const NewRegistry = () => {
               <DateInput
                 filterValue={formData}
                 size={textfieldSize}
-                //required={true}
                 setFilterValue={setFormData}
-                label="Geburtsdatum"
+                label={t("forms.birthDate")}
                 name="dob"
               />
             </div>
             <div className={css.flex}>
               <FormControl sx={{ minWidth: 120, width: "calc(100% - 5px)" }}>
                 <InputLabel size={textfieldSize} id="group">
-                  Familienzustand
+                  {t("forms.maritalStatus")}
                 </InputLabel>
                 <Select
                   sx={{ width: "100%" }}
@@ -241,38 +188,28 @@ const NewRegistry = () => {
                   size={textfieldSize}
                   name="maritalStatus"
                   value={formData?.maritalStatus || ""}
-                  label="Familienzustand"
+                  label={t("forms.maritalStatus")}
                   onChange={handleChange}
                 >
                   <MenuItem value={""}>
-                    <Typography
-                      component="em"
-                      sx={{ fontSize: typographyFontSize }}
-                    >
-                      None
+                    <Typography component="em" sx={{ fontSize: typographyFontSize }}>
+                      {t("forms.none")}
                     </Typography>
                   </MenuItem>
-
                   <MenuItem value={"Ledig"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Ledig
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.maritalSingle")}</Typography>
                   </MenuItem>
                   <MenuItem value={"Verheiratet"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Verheiratet
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.maritalMarried")}</Typography>
                   </MenuItem>
                   <MenuItem value={"Sonstiges"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Sonstiges
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.maritalOther")}</Typography>
                   </MenuItem>
                 </Select>
               </FormControl>
               <FormControl sx={{ minWidth: 120, width: "calc(100% - 5px)" }}>
                 <InputLabel size={textfieldSize} id="gender-group">
-                  Geschlecht
+                  {t("forms.gender")}
                 </InputLabel>
                 <Select
                   sx={{ width: "100%" }}
@@ -282,31 +219,21 @@ const NewRegistry = () => {
                   name="gender"
                   value={formData.gender || ""}
                   onChange={handleChange}
-                  label="Geschlecht"
+                  label={t("forms.gender")}
                 >
                   <MenuItem value={""}>
-                    <Typography
-                      component="em"
-                      sx={{ fontSize: typographyFontSize }}
-                    >
-                      None
+                    <Typography component="em" sx={{ fontSize: typographyFontSize }}>
+                      {t("forms.none")}
                     </Typography>
                   </MenuItem>
-
                   <MenuItem value={"Weiblich"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Weiblich
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.genderFemale")}</Typography>
                   </MenuItem>
                   <MenuItem value={"Männlich"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Männlich
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.genderMale")}</Typography>
                   </MenuItem>
                   <MenuItem value={"Andere"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Andere
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.genderOther")}</Typography>
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -314,9 +241,8 @@ const NewRegistry = () => {
             <div className={css.flex}>
               <TextField
                 name="address"
-                label="Adresse"
+                label={t("forms.address")}
                 size={textfieldSize}
-                //required
                 fullWidth
                 value={formData.address || ""}
                 onChange={handleChange}
@@ -326,8 +252,7 @@ const NewRegistry = () => {
               <TextField
                 name="zip"
                 size={textfieldSize}
-                label="PLZ"
-                //required
+                label={t("forms.zip")}
                 fullWidth
                 value={formData.zip || ""}
                 onChange={handleChange}
@@ -335,8 +260,7 @@ const NewRegistry = () => {
               <TextField
                 name="city"
                 size={textfieldSize}
-                label="Ort"
-                //required
+                label={t("forms.city")}
                 fullWidth
                 value={formData.city || ""}
                 onChange={handleChange}
@@ -346,8 +270,7 @@ const NewRegistry = () => {
               <TextField
                 name="citizenship"
                 size={textfieldSize}
-                label="Staatsbürgerschaft"
-                //required
+                label={t("forms.citizenship")}
                 fullWidth
                 value={formData.citizenship || ""}
                 onChange={handleChange}
@@ -355,7 +278,7 @@ const NewRegistry = () => {
               <TextField
                 name="iban"
                 size={textfieldSize}
-                label="IBAN"
+                label={t("forms.iban")}
                 fullWidth
                 value={formData.iban || ""}
                 onChange={handleChange}
@@ -367,17 +290,15 @@ const NewRegistry = () => {
               <DateInput
                 filterValue={formData}
                 size={textfieldSize}
-                //required={true}
                 setFilterValue={setFormData}
-                label="Anmeldedatum 1. Arbeitstag"
+                label={t("forms.registrationDate")}
                 name="firstWorkDay"
               />
               <TextField
                 name="jobDescription"
-                label="Tätigkeit"
+                label={t("forms.jobDescription")}
                 size={textfieldSize}
-                placeholder="z.B Taxilenker"
-                //required
+                placeholder={t("forms.placeholder")}
                 fullWidth
                 value={formData.jobDescription || ""}
                 onChange={handleChange}
@@ -386,9 +307,8 @@ const NewRegistry = () => {
             <div className={css.flex}>
               <TextField
                 name="workingHours"
-                label="Arbeitszeit (Stunden-Woche)"
+                label={t("forms.workingHours")}
                 size={textfieldSize}
-                //required
                 fullWidth
                 value={formData.workingHours || ""}
                 onChange={handleChange}
@@ -396,7 +316,7 @@ const NewRegistry = () => {
 
               <FormControl sx={{ minWidth: 120, width: "calc(100% - 5px)" }}>
                 <InputLabel size={textfieldSize} id="group">
-                  Gruppe
+                  {t("forms.group")}
                 </InputLabel>
                 <Select
                   sx={{ width: "100%" }}
@@ -405,32 +325,22 @@ const NewRegistry = () => {
                   size={textfieldSize}
                   name="gruppe"
                   value={formData?.gruppe || ""}
-                  label="Gruppe"
+                  label={t("forms.group")}
                   onChange={handleChange}
                 >
                   <MenuItem value={""}>
-                    <Typography
-                      component="em"
-                      sx={{ fontSize: typographyFontSize }}
-                    >
-                      None
+                    <Typography component="em" sx={{ fontSize: typographyFontSize }}>
+                      {t("forms.none")}
                     </Typography>
                   </MenuItem>
-
                   <MenuItem value={"Angestellte/r"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Angestellte/r
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.employee")}</Typography>
                   </MenuItem>
                   <MenuItem value={"Arbeiter/in"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Arbeiter/in
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.worker")}</Typography>
                   </MenuItem>
                   <MenuItem value={"Lehrling"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Lehrling
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.apprentice")}</Typography>
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -438,7 +348,7 @@ const NewRegistry = () => {
             <div className={css.flex}>
               <FormControl sx={{ minWidth: 120, width: "calc(100% - 5px)" }}>
                 <InputLabel size={textfieldSize} id="insuranceType">
-                  Versicherungstyp
+                  {t("forms.insuranceType")}
                 </InputLabel>
                 <Select
                   sx={{ width: "100%" }}
@@ -447,27 +357,19 @@ const NewRegistry = () => {
                   id="demo-select-small"
                   name="insuranceType"
                   value={formData?.insuranceType || ""}
-                  label="Versicherungstyp"
+                  label={t("forms.insuranceType")}
                   onChange={handleChange}
                 >
                   <MenuItem value={""}>
-                    <Typography
-                      component="em"
-                      sx={{ fontSize: typographyFontSize }}
-                    >
-                      None
+                    <Typography component="em" sx={{ fontSize: typographyFontSize }}>
+                      {t("forms.none")}
                     </Typography>
                   </MenuItem>
-
                   <MenuItem value={"Vollversichert"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Vollversichert
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.fullyInsured")}</Typography>
                   </MenuItem>
                   <MenuItem value={"Geringfügig"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Geringfügig
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.marginallyEmployed")}</Typography>
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -476,7 +378,7 @@ const NewRegistry = () => {
             <div className={css.flex}>
               <FormControl sx={{ minWidth: 120, width: "calc(100% - 5px)" }}>
                 <InputLabel size={textfieldSize} id="gehalt-select-label">
-                  Gehalt
+                  {t("forms.salary")}
                 </InputLabel>
                 <Select
                   sx={{ width: "100%" }}
@@ -485,19 +387,15 @@ const NewRegistry = () => {
                   id="gehalt-select-small"
                   name="salaryForm"
                   value={formData?.salaryForm || (formData?.minWage && "kv")}
-                  label="Gehalt"
+                  label={t("forms.salary")}
                   onChange={handleChange}
                   fullWidth
                 >
                   <MenuItem value={"kv"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Mindestlohn
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.minWage")}</Typography>
                   </MenuItem>
                   <MenuItem value={"manualInput"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Manuelle Eingabe
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.manualInput")}</Typography>
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -505,8 +403,7 @@ const NewRegistry = () => {
                 <TextField
                   name="salary"
                   size={textfieldSize}
-                  label="Gehalt Manuelle Eingabe (Brutto)"
-                  //required
+                  label={t("forms.salaryManual")}
                   fullWidth
                   value={formData.salary || ""}
                   onChange={handleChange}
@@ -514,27 +411,11 @@ const NewRegistry = () => {
               ) : (
                 <div className={css.flex} />
               )}
-
-              {/* <FormControlLabel
-            // sx={{ width: "100%" }}
-            slotProps={{
-              typography: { fontSize: typographyFontSize },
-              }}
-              control={
-              <Checkbox
-                size={textfieldSize}
-                checked={formData.minWage || false}
-                onChange={handleChange}
-                name="minWage"
-                />
-                }
-                label="Gehalt nach Kollektivvertrag"
-                /> */}
             </div>
             <div className={css.flex}>
               <TextField
                 name="note"
-                label="Notizen"
+                label={t("forms.notes")}
                 size={textfieldSize}
                 fullWidth
                 multiline
@@ -553,21 +434,21 @@ const NewRegistry = () => {
               <FileInput
                 id="eCard"
                 name="eCard"
-                label="E Card"
+                label={t("forms.eCard")}
                 handleChange={handleChange}
                 value={formData.eCard}
               />
               <FileInput
                 id="meldezettel"
                 name="meldezettel"
-                label="Meldezettel"
+                label={t("forms.meldezettel")}
                 handleChange={handleChange}
                 value={formData.meldezettel}
               />
               <FileInput
                 id="reisepass"
                 name="reisepass"
-                label="Reisepass"
+                label={t("forms.passport")}
                 handleChange={handleChange}
                 value={formData.reisepass}
               />
@@ -581,13 +462,12 @@ const NewRegistry = () => {
                     size={textfieldSize}
                     onChange={handleChange}
                     name="confirmation"
-                    //required
                   />
                 }
                 label={
                   <span style={{ fontSize: typographyFontSize }}>
-                    Hiermit akzeptiere ich die{" "}
-                    <a href="/dsvgo"> DSVGO (Datenschutzerklärung)</a>
+                    {t("forms.confirmation")}{" "}
+                    <a href="/dsvgo">{t("forms.dsvgo")}</a>
                   </span>
                 }
               />
@@ -600,7 +480,7 @@ const NewRegistry = () => {
             color="primary"
             sx={{ alignSelf: "flex-start" }}
           >
-            Senden
+            {t("forms.send")}
           </Button>
         </div>
       </form>

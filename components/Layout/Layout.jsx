@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useTranslation } from "react-i18next"; 
+import { useRouter } from "next/router"; // Um zu prüfen, auf welcher Seite wir sind
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -22,13 +24,26 @@ import { useMediaQuery } from "@mui/material";
 import css from "@/styles/layout.module.css";
 
 const Layout = ({ children }) => {
+  const { t, i18n } = useTranslation(); // i18n geladen, um Sprache zu setzen
+  const router = useRouter(); // Router geladen
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const [alertOpen, setAlertOpen] = React.useState(true);
+  
   const screenMedium = useMediaQuery("(max-width:800px)");
 
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
+
+  // --- NEU: Sprache aus dem Gedächtnis laden, wenn die Seite aufgerufen wird ---
+  React.useEffect(() => {
+    const savedLang = localStorage.getItem("krc_language");
+    if (savedLang && i18n.language !== savedLang) {
+      i18n.changeLanguage(savedLang);
+    }
+  }, [i18n]);
+  // -----------------------------------------------------------------------------
 
   React.useEffect(() => {
     setOpen(screenMedium ? false : true);
@@ -53,19 +68,20 @@ const Layout = ({ children }) => {
               height: "100%",
               width: "100%",
               display: "flex",
-              justifyContent: "flex-start",
+              justifyContent: "space-between", 
               alignItems: "center",
-              columnGap: "10px",
+              paddingInline: "10px", 
               color: "#fff",
             }}
           >
-            <IconButton onClick={() => setOpen(!open)}>
-              {open ? (
-                <CloseIcon sx={{ color: "#fff" }} />
-              ) : (
-                <MenuIcon sx={{ color: "#fff" }} />
-              )}
-            </IconButton>
+            <div style={{ display: "flex", alignItems: "center", columnGap: "10px" }}>
+              <IconButton onClick={() => setOpen(!open)}>
+                {open ? (
+                  <CloseIcon sx={{ color: "#fff" }} />
+                ) : (
+                  <MenuIcon sx={{ color: "#fff" }} />
+                )}
+              </IconButton>
 
             <Link
               href={"/"}
@@ -150,7 +166,6 @@ const Layout = ({ children }) => {
             Buchhaltungskanzlei KG
           </h3>
         </div>
-
         <Divider />
         <SidebarList />
       </Drawer>
