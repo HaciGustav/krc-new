@@ -1,7 +1,7 @@
 {
   "header": {
     "address": "Oberlaaer Straße 191/4, 1100 Viyana - Tel:",
-    "kanzlei": "Muhasebe Bürosu KG",
+    "kanzlei": "Buchhaltungskanzlei KG",
     "title": "Profesyonel Muhasebe",
     "slogan1": "Zamanında",
     "slogan2": "Güvenilir",
@@ -13,7 +13,7 @@
   },
   "footer": {
     "company": "KRC",
-    "companyFull": "Muhasebe Bürosu KG",
+    "companyFull": "Buchhaltungskanzlei KG",
     "address": "Oberlaaer Straße 191/4",
     "city": "1100 Viyana",
     "phone": "+43 660 174 39 00",
@@ -22,7 +22,7 @@
     "hoursMonThu": "Pazartesi-Perşembe: 09:00-12:00 ve 13:00-15:30",
     "hoursFri": "Cuma: 09:00-12:00",
     "hoursByAppointment": "veya randevu ile",
-    "copyright": "© Telif Hakkı - KRC Muhasebe",
+    "copyright": "© Telif Hakkı - KRC Buchhaltung",
     "privacy": "Gizlilik Politikası"
   },
   "navigation": {
