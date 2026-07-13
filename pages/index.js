@@ -5,14 +5,17 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { terminalArt } from "@/utils/devCredentials";
 import dynamic from "next/dynamic";
+import { useTranslation } from "react-i18next";
 
 export default function Home() {
+  const { t } = useTranslation();
+
   console.log(terminalArt);
   return (
     <>
       <Head>
-        <title>KRC Buchhaltung</title>
-        <meta name="description" content="Buchaltung" />
+        <title>{t('header.title')} - KRC Buchhaltung</title>
+        <meta name="description" content={t('header.kanzlei')} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
