@@ -8,10 +8,9 @@ import {
   InputLabel,
   Select,
   Checkbox,
-  useMediaQuery,
 } from "@mui/material";
 import { useState } from "react";
-
+import { useTranslation } from "react-i18next";
 import css from "@/styles/forms.module.css";
 import DateInput from "@/components/form-components/DateInput";
 import useFormCalls from "@/hooks/useFormCalls";
@@ -20,42 +19,18 @@ import ValidationWarningModal from "@/components/form-components/ValidationWarni
 import SectionTitle from "@/components/form-components/SectionTitle";
 
 const requiredFields = [
-  {
-    fieldName: "employer",
-    fieldCaption: "Dienstgeber",
-  },
-  {
-    fieldName: "workAddress",
-    fieldCaption: "Betriebstätte",
-  },
-  {
-    fieldName: "email",
-    fieldCaption: "Firmen e-mail",
-  },
-  {
-    fieldName: "firstnameDN",
-    fieldCaption: "Vorname",
-  },
-  {
-    fieldName: "lastnameDN",
-    fieldCaption: "Nachname",
-  },
-  {
-    fieldName: "insuranceNumberDN",
-    fieldCaption: "Versicherungsnummer",
-  },
-
-  {
-    fieldName: "changingPurpose",
-    fieldCaption: "Änderungszweck",
-  },
-  {
-    fieldName: "confirmation",
-    fieldCaption: "DSVGO (Datenschutzerklärung)",
-  },
+  { fieldName: "employer", fieldCaption: "forms.employer" },
+  { fieldName: "workAddress", fieldCaption: "forms.workAddress" },
+  { fieldName: "email", fieldCaption: "forms.email" },
+  { fieldName: "firstnameDN", fieldCaption: "forms.firstNameEmployee" },
+  { fieldName: "lastnameDN", fieldCaption: "forms.lastNameEmployee" },
+  { fieldName: "insuranceNumberDN", fieldCaption: "forms.insuranceNumber" },
+  { fieldName: "changingPurpose", fieldCaption: "forms.changePurpose" },
+  { fieldName: "confirmation", fieldCaption: "forms.dsvgo" },
 ];
 
 const Aenderung = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({});
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
   const { sendAenderung } = useFormCalls();
@@ -71,7 +46,6 @@ const Aenderung = () => {
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
@@ -80,7 +54,12 @@ const Aenderung = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const isValidationOk = validateForm(requiredFields, formData);
+    const localizedRequiredFields = requiredFields.map(f => ({
+      ...f,
+      fieldCaption: t(f.fieldCaption)
+    }));
+
+    const isValidationOk = validateForm(localizedRequiredFields, formData);
     if (isValidationOk) {
       setSubmitButtonDisabled(true);
       sendAenderung(formData).then(() => setSubmitButtonDisabled(false));
@@ -93,21 +72,19 @@ const Aenderung = () => {
         modalProps={warningModalProps}
         handleClose={handleCloseModal}
       />
-
       <form className={css.container} onSubmit={handleSubmit}>
         <Typography variant="h4" sx={{ fontSize: pageHeaderSize }} gutterBottom>
-          Änderungsformular
+          {t("forms.change")}
         </Typography>
 
         <div className={css.flex_column}>
           <div className={css.form_section}>
-            <SectionTitle title={"Firmendaten/Dienstgeber"} />
+            <SectionTitle title={t("forms.companyData")} />
             <div className={css.flex}>
               <TextField
                 name="employer"
-                label="Dienstgeber"
+                label={t("forms.employer")}
                 size={textfieldSize}
-                // required
                 fullWidth
                 value={formData.employer || ""}
                 onChange={handleChange}
@@ -115,8 +92,7 @@ const Aenderung = () => {
               <TextField
                 name="workAddress"
                 size={textfieldSize}
-                label="Betriebstätte (Arbeitsort)"
-                // required
+                label={t("forms.workAddress")}
                 fullWidth
                 value={formData.workAddress || ""}
                 onChange={handleChange}
@@ -126,11 +102,8 @@ const Aenderung = () => {
               <TextField
                 name="email"
                 size={textfieldSize}
-                label="Firmen e-mail"
-                inputProps={{
-                  type: "email",
-                }}
-                // required
+                label={t("forms.email")}
+                inputProps={{ type: "email" }}
                 fullWidth
                 value={formData.email || ""}
                 onChange={handleChange}
@@ -139,23 +112,20 @@ const Aenderung = () => {
             </div>
           </div>
           <div className={css.form_section}>
-            <SectionTitle title={"Dienstnehmer/in - Arbeiter/in Daten"} />
+            <SectionTitle title={t("forms.employeeData")} />
             <div className={css.flex}>
               <TextField
                 name="firstnameDN"
                 size={textfieldSize}
-                label="Vorname DN"
-                // required
+                label={t("forms.firstNameEmployee")}
                 fullWidth
                 value={formData.firstnameDN || ""}
                 onChange={handleChange}
               />
-
               <TextField
                 name="lastnameDN"
                 size={textfieldSize}
-                label="Nachname DN"
-                // required
+                label={t("forms.lastNameEmployee")}
                 fullWidth
                 value={formData.lastnameDN || ""}
                 onChange={handleChange}
@@ -165,7 +135,7 @@ const Aenderung = () => {
               <TextField
                 name="insuranceNumberDN"
                 size={textfieldSize}
-                label="Versicherungsnummer DN"
+                label={t("forms.insuranceNumber")}
                 fullWidth
                 value={formData.insuranceNumberDN || ""}
                 onChange={handleChange}
@@ -173,25 +143,23 @@ const Aenderung = () => {
               <DateInput
                 filterValue={formData}
                 size={textfieldSize}
-                //required={true}
                 setFilterValue={setFormData}
-                label="Geburtsdatum"
+                label={t("forms.birthDate")}
                 name="dob"
-              />{" "}
+              />
             </div>
             <div className={css.flex}>
               <TextField
                 name="address"
-                label="Adresse"
+                label={t("forms.address")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.address || ""}
                 onChange={handleChange}
               />
-
               <TextField
                 name="zip"
-                label="PLZ"
+                label={t("forms.zip")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.zip || ""}
@@ -201,16 +169,15 @@ const Aenderung = () => {
             <div className={css.flex}>
               <TextField
                 name="city"
-                label="Ort"
+                label={t("forms.city")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.city || ""}
                 onChange={handleChange}
               />
-
               <TextField
                 name="citizenship"
-                label="Staatsbürgerschaft"
+                label={t("forms.citizenship")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.citizenship || ""}
@@ -220,36 +187,34 @@ const Aenderung = () => {
             <div className={css.flex}>
               <TextField
                 name="iban"
-                label="IBAN"
+                label={t("forms.iban")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.iban || ""}
                 onChange={handleChange}
                 inputProps={{ style: { textTransform: "uppercase" } }}
               />
-
               <DateInput
                 filterValue={formData}
                 size={textfieldSize}
                 setFilterValue={setFormData}
-                label="Anmeldedatum 1. Arbeitstag"
+                label={t("forms.registrationDate")}
                 name="firstWorkDay"
               />
             </div>
             <div className={css.flex}>
               <TextField
                 name="jobDescription"
-                label="Tätigkeit"
+                label={t("forms.jobDescription")}
                 size={textfieldSize}
-                placeholder="z.B Taxilenker"
+                placeholder={t("forms.placeholder")}
                 fullWidth
                 value={formData.jobDescription || ""}
                 onChange={handleChange}
               />
-
               <TextField
                 name="experience"
-                label="Erfahrung Vorjahre"
+                label={t("forms.experience")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.experience || ""}
@@ -259,16 +224,15 @@ const Aenderung = () => {
             <div className={css.flex}>
               <TextField
                 name="workingHours"
-                label="Arbeitszeit (Stunden-Woche)"
+                label={t("forms.workingHours")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.workingHours || ""}
                 onChange={handleChange}
               />
-
               <FormControl sx={{ minWidth: 120, width: "calc(100% - 5px)" }}>
                 <InputLabel size={textfieldSize} id="group">
-                  Gruppe
+                  {t("forms.group")}
                 </InputLabel>
                 <Select
                   sx={{ width: "100%" }}
@@ -277,35 +241,22 @@ const Aenderung = () => {
                   size={textfieldSize}
                   name="gruppe"
                   value={formData?.gruppe || ""}
-                  label="Gruppe"
+                  label={t("forms.group")}
                   onChange={handleChange}
                 >
                   <MenuItem value={""}>
-                    <Typography
-                      component="em"
-                      sx={{ fontSize: typographyFontSize }}
-                    >
-                      None
+                    <Typography component="em" sx={{ fontSize: typographyFontSize }}>
+                      {t("forms.none")}
                     </Typography>
                   </MenuItem>
-
                   <MenuItem value={"Angestellte/r"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Angestellte/r
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.employee")}</Typography>
                   </MenuItem>
-                  <MenuItem
-                    value={"Arbeiter/in"}
-                    sx={{ fontSize: typographyFontSize }}
-                  >
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Arbeiter/in
-                    </Typography>
+                  <MenuItem value={"Arbeiter/in"}>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.worker")}</Typography>
                   </MenuItem>
                   <MenuItem value={"Lehrling"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Lehrling
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.apprentice")}</Typography>
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -313,7 +264,7 @@ const Aenderung = () => {
             <div className={css.flex}>
               <FormControl sx={{ minWidth: 120, width: "calc(100% - 5px)" }}>
                 <InputLabel size={textfieldSize} id="insuranceType">
-                  Versicherungstyp
+                  {t("forms.insuranceType")}
                 </InputLabel>
                 <Select
                   sx={{ width: "100%" }}
@@ -322,37 +273,26 @@ const Aenderung = () => {
                   size={textfieldSize}
                   name="insuranceType"
                   value={formData?.insuranceType || ""}
-                  label="Versicherungstyp"
+                  label={t("forms.insuranceType")}
                   onChange={handleChange}
-                  slotProps={{
-                    input: { sx: { fontSize: typographyFontSize } },
-                  }}
+                  slotProps={{ input: { sx: { fontSize: typographyFontSize } } }}
                 >
                   <MenuItem value={""}>
-                    <Typography
-                      component="em"
-                      sx={{ fontSize: typographyFontSize }}
-                    >
-                      None
+                    <Typography component="em" sx={{ fontSize: typographyFontSize }}>
+                      {t("forms.none")}
                     </Typography>
                   </MenuItem>
-
                   <MenuItem value={"Vollversichert"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Vollversichert
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.fullyInsured")}</Typography>
                   </MenuItem>
                   <MenuItem value={"Geringfügig"}>
-                    <Typography sx={{ fontSize: typographyFontSize }}>
-                      Geringfügig
-                    </Typography>
+                    <Typography sx={{ fontSize: typographyFontSize }}>{t("forms.marginallyEmployed")}</Typography>
                   </MenuItem>
                 </Select>
               </FormControl>
-
               <TextField
                 name="salary"
-                label="Gehalt - Monat (Brutto)"
+                label={t("forms.salary")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.salary || ""}
@@ -362,20 +302,18 @@ const Aenderung = () => {
             <div className={css.flex}>
               <TextField
                 name="changingPurpose"
-                label="Änderungszweck"
+                label={t("forms.changePurpose")}
                 size={textfieldSize}
-                // required
                 fullWidth
                 multiline
                 rows={3}
                 value={formData.changingPurpose || ""}
                 onChange={handleChange}
-                placeholder="Bitte beschreiben Sie, welche Daten Sie ändern möchten"
+                placeholder={t("forms.changePurposePlaceholder")}
               />
-
               <TextField
                 name="note"
-                label="Notizen"
+                label={t("forms.notes")}
                 size={textfieldSize}
                 fullWidth
                 multiline
@@ -392,19 +330,17 @@ const Aenderung = () => {
                     size={textfieldSize}
                     onChange={handleChange}
                     name="confirmation"
-                    // required
                   />
                 }
                 label={
                   <span style={{ fontSize: typographyFontSize }}>
-                    Hiermit akzeptiere ich die{" "}
-                    <a href="/dsvgo"> DSVGO (Datenschutzerklärung)</a>
+                    {t("forms.confirmation")}
+                    <a href="/dsvgo"> {t("forms.dsvgo")}</a>
                   </span>
                 }
               />
             </div>
           </div>
-
           <Button
             disabled={submitButtonDisabled}
             type="submit"
@@ -412,7 +348,7 @@ const Aenderung = () => {
             color="primary"
             sx={{ alignSelf: "flex-start" }}
           >
-            Senden
+            {t("forms.send")}
           </Button>
         </div>
       </form>

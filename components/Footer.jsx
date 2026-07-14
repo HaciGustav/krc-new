@@ -1,10 +1,14 @@
 import css from "@/styles/footer.module.css";
 import dynamic from "next/dynamic";
+import { useTranslation } from "react-i18next";
+
 const MapWithNoSSR = dynamic(() => import("@/components/MapComponent"), {
   ssr: false,
 });
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer className={css.footer}>
       <div className={css.container}>
@@ -16,30 +20,30 @@ const Footer = () => {
             }}
           >
             <div className={css.footer_section}>
-              <h2>KRC</h2>
-              <p>Buchhaltungskanzlei KG</p>
+              <h2>{t('footer.company')}</h2>
+              <p>{t('footer.companyFull')}</p>
               <p>
-                Oberlaaer Straße 191/4,
+                {t('footer.address')},
                 <br />
-                1100 Wien
+                {t('footer.city')}
               </p>
               <p>
-                <a href="tel:+436601743900">+43 660 174 39 00</a>
+                <a href="tel:+436601743900">{t('footer.phone')}</a>
                 <br />
 
                 <a href="mailto:office@krc-buchhaltung.at">
-                  office@krc-buchhaltung.at
+                  {t('footer.email')}
                 </a>
               </p>
             </div>
             <div className={css.footer_section}>
-              <h2>ÖFFNUNGSZEITEN</h2>
+              <h2>{t('footer.hours')}</h2>
               <p>
-                Mo-Do: 09:00-12:00 und 13:00-15:30
+                {t('footer.hoursMonThu')}
                 <br />
-                Fr: 09:00-12:00
+                {t('footer.hoursFri')}
                 <br />
-                oder nach Terminvereinbarung
+                {t('footer.hoursByAppointment')}
               </p>
             </div>
           </div>
@@ -49,9 +53,9 @@ const Footer = () => {
         </div>
       </div>
       <div className={css.footer_bottom}>
-        <p>© Copyright - KRC Buchhaltung</p>
+        <p>{t('footer.copyright')}</p>
         <p>
-          <a href="/dsvgo">Datenschutz</a>
+          <a href="/dsvgo">{t('footer.privacy')}</a>
         </p>
       </div>
     </footer>

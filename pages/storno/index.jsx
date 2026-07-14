@@ -15,6 +15,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import css from "@/styles/forms.module.css";
 import DateInput from "@/components/form-components/DateInput";
@@ -22,47 +23,21 @@ import useFormCalls from "@/hooks/useFormCalls";
 import useFormUtilities from "@/hooks/useFormUtilities";
 import ValidationWarningModal from "@/components/form-components/ValidationWarningModal";
 import SectionTitle from "@/components/form-components/SectionTitle";
-const requiredFields = [
-  {
-    fieldName: "employer",
-    fieldCaption: "Dienstgeber",
-  },
-  {
-    fieldName: "workAddress",
-    fieldCaption: "Betriebstätte (Arbeitsort)",
-  },
-  {
-    fieldName: "email",
-    fieldCaption: "Firmen e-mail",
-  },
-  {
-    fieldName: "firstnameDN",
-    fieldCaption: "Vorname",
-  },
-  {
-    fieldName: "lastnameDN",
-    fieldCaption: "Nachname",
-  },
-  {
-    fieldName: "insuranceNumberDN",
-    fieldCaption: "Versicherungsnummer",
-  },
 
-  {
-    fieldName: "cancellationType",
-    fieldCaption: "Stornierung von - ",
-  },
-  {
-    fieldName: "mailSentAt",
-    fieldCaption: "Datum der gesendeten Nachricht",
-  },
-  {
-    fieldName: "confirmation",
-    fieldCaption: "DSVGO (Datenschutzerklärung)",
-  },
+const requiredFields = [
+  { fieldName: "employer", fieldCaption: "forms.employer" },
+  { fieldName: "workAddress", fieldCaption: "forms.workAddress" },
+  { fieldName: "email", fieldCaption: "forms.email" },
+  { fieldName: "firstnameDN", fieldCaption: "forms.firstNameEmployee" },
+  { fieldName: "lastnameDN", fieldCaption: "forms.lastNameEmployee" },
+  { fieldName: "insuranceNumberDN", fieldCaption: "forms.insuranceNumber" },
+  { fieldName: "cancellationType", fieldCaption: "forms.cancellationType" },
+  { fieldName: "mailSentAt", fieldCaption: "forms.messageSentDate" },
+  { fieldName: "confirmation", fieldCaption: "forms.dsvgo" },
 ];
 
 const Storno = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({});
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
 
@@ -79,12 +54,20 @@ const Storno = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const isValidationOk = validateForm(requiredFields, formData);
+    
+    // Übersetze die requiredFields für die Warnmeldung dynamisch
+    const localizedRequiredFields = requiredFields.map(f => ({
+      ...f,
+      fieldCaption: t(f.fieldCaption)
+    }));
+
+    const isValidationOk = validateForm(localizedRequiredFields, formData);
     if (isValidationOk) {
       setSubmitButtonDisabled(true);
       sendStorno(formData).then(() => setSubmitButtonDisabled(false));
     }
   };
+
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     setFormData({
@@ -102,40 +85,37 @@ const Storno = () => {
 
       <form className={css.container} onSubmit={handleSubmit}>
         <Typography variant="h4" sx={{ fontSize: pageHeaderSize }} gutterBottom>
-          Stornierungsformular
+          {t("forms.cancellation")}
         </Typography>
         <div className={css.flex_column}>
           <div className={css.form_section}>
-            <SectionTitle title={"Firmendaten/Dienstgeber"} />
+            <SectionTitle title={t("forms.companyData")} />
             <div className={css.flex}>
               <TextField
                 name="employer"
-                label="Dienstgeber"
+                label={t("forms.employer")}
                 size={textfieldSize}
-                // required
                 fullWidth
                 value={formData.employer || ""}
                 onChange={handleChange}
               />
               <TextField
                 name="workAddress"
-                label="Betriebstätte (Arbeitsort)"
+                label={t("forms.workAddress")}
                 size={textfieldSize}
-                // required
                 fullWidth
-                value={formData.workAddress}
+                value={formData.workAddress || ""}
                 onChange={handleChange}
               />
             </div>
             <div className={css.flex}>
               <TextField
                 name="email"
-                label="Firmen e-mail"
+                label={t("forms.email")}
                 size={textfieldSize}
                 inputProps={{
                   type: "email",
                 }}
-                // required
                 fullWidth
                 value={formData.email || ""}
                 onChange={handleChange}
@@ -144,13 +124,12 @@ const Storno = () => {
             </div>
           </div>
           <div className={css.form_section}>
-            <SectionTitle title={"Dienstnehmer/in - Arbeiter/in Daten"} />
+            <SectionTitle title={t("forms.employeeData")} />
 
             <div className={css.flex}>
               <TextField
                 name="firstnameDN"
-                label="Vorname DN"
-                // required
+                label={t("forms.firstNameEmployee")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.firstnameDN || ""}
@@ -158,8 +137,7 @@ const Storno = () => {
               />
               <TextField
                 name="lastnameDN"
-                label="Nachname DN"
-                // required
+                label={t("forms.lastNameEmployee")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.lastnameDN || ""}
@@ -170,8 +148,7 @@ const Storno = () => {
             <div className={css.flex}>
               <TextField
                 name="insuranceNumberDN"
-                label="Versicherungsnummer DN"
-                // required
+                label={t("forms.insuranceNumber")}
                 size={textfieldSize}
                 fullWidth
                 value={formData.insuranceNumberDN || ""}
@@ -180,16 +157,15 @@ const Storno = () => {
               <DateInput
                 filterValue={formData}
                 size={textfieldSize}
-                //required={true}
                 setFilterValue={setFormData}
-                label="Geburtsdatum"
+                label={t("forms.birthDate")}
                 name="dob"
               />{" "}
             </div>
             <div className={css.flex}>
               <FormControl sx={{ minWidth: 120, width: "calc(100% - 5px)" }}>
                 <InputLabel size={textfieldSize} id="cancellationType-group">
-                  Stornierung von
+                  {t("forms.cancellationType")}
                 </InputLabel>
                 <Select
                   sx={{ width: "100%" }}
@@ -199,25 +175,22 @@ const Storno = () => {
                   name="cancellationType"
                   value={formData.cancellationType || ""}
                   onChange={handleChange}
-                  label="Stornierung von"
+                  label={t("forms.cancellationType")}
                 >
                   <MenuItem value={""}>
-                    <Typography
-                      component="em"
-                      sx={{ fontSize: typographyFontSize }}
-                    >
-                      None
+                    <Typography component="em" sx={{ fontSize: typographyFontSize }}>
+                      {t("forms.none")}
                     </Typography>
                   </MenuItem>
 
                   <MenuItem value={"Anmeldung"}>
                     <Typography sx={{ fontSize: typographyFontSize }}>
-                      Anmeldung
+                      {t("forms.cancellationRegistration")}
                     </Typography>
                   </MenuItem>
                   <MenuItem value={"Abmeldung"}>
                     <Typography sx={{ fontSize: typographyFontSize }}>
-                      Abmeldung
+                      {t("forms.cancellationDeregistration")}
                     </Typography>
                   </MenuItem>
                 </Select>
@@ -225,9 +198,8 @@ const Storno = () => {
 
               <DateInput
                 filterValue={formData}
-                // required={true}
                 setFilterValue={setFormData}
-                label="Datum der gesendeten Nachricht"
+                label={t("forms.messageSentDate")}
                 name="mailSentAt"
                 size={textfieldSize}
               />
@@ -235,7 +207,7 @@ const Storno = () => {
             <div className={css.flex}>
               <TextField
                 name="note"
-                label="Notizen"
+                label={t("forms.notes")}
                 fullWidth
                 multiline
                 rows={4}
@@ -252,13 +224,11 @@ const Storno = () => {
                     size={textfieldSize}
                     onChange={handleChange}
                     name="confirmation"
-                    // required
                   />
                 }
                 label={
                   <span style={{ fontSize: typographyFontSize }}>
-                    Hiermit akzeptiere ich die{" "}
-                    <a href="/dsvgo"> DSVGO (Datenschutzerklärung)</a>
+                    {t("forms.confirmation")} <a href="/dsvgo"> {t("forms.dsvgo")}</a>
                   </span>
                 }
               />
@@ -272,7 +242,7 @@ const Storno = () => {
             color="primary"
             sx={{ alignSelf: "flex-start" }}
           >
-            Senden
+            {t("forms.send")}
           </Button>
         </div>
       </form>

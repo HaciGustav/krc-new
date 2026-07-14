@@ -8,6 +8,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import css from "@/styles/forms.module.css";
 import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const style = {
   position: "absolute",
@@ -24,6 +25,8 @@ const style = {
 };
 
 const ValidationWarningModal = ({ modalProps, handleClose }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <>
@@ -34,7 +37,7 @@ const ValidationWarningModal = ({ modalProps, handleClose }) => {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Fehlende Eingabe!"}
+            {t('errors.missingInput')}
           </DialogTitle>
           <DialogContent
             sx={{
@@ -51,8 +54,7 @@ const ValidationWarningModal = ({ modalProps, handleClose }) => {
                 <Typography> {modalProps.message}</Typography>
               ) : (
                 <Typography>
-                  Das Feld{" "}
-                  <span
+                  {t('errors.fieldRequired')} <span
                     style={{
                       fontWeight: "600",
                       fontSize: "large",
@@ -61,7 +63,6 @@ const ValidationWarningModal = ({ modalProps, handleClose }) => {
                   >
                     <em>{modalProps?.fieldCaption || ""}</em>
                   </span>{" "}
-                  ist erforderlich
                 </Typography>
               )}
               <WarningAmberIcon
