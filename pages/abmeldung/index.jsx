@@ -19,6 +19,10 @@ import useFormUtilities from "@/hooks/useFormUtilities";
 import ValidationWarningModal from "@/components/form-components/ValidationWarningModal";
 import SectionTitle from "@/components/form-components/SectionTitle";
 
+// LOGIN AUTH
+import ProtectedRoute from "@/components/ProtectedRoute";
+import useFormPrefill from "@/hooks/useFormPrefill";
+
 const requiredFields = [
   { fieldName: "employer", fieldCaption: "forms.employer" },
   { fieldName: "workAddress", fieldCaption: "forms.workAddress" },
@@ -47,6 +51,10 @@ const Abmeldung = () => {
     typographyFontSize,
     setWarningModalProps,
   } = useFormUtilities();
+
+   //preFill
+    useFormPrefill(setFormData);
+    
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -106,7 +114,7 @@ const Abmeldung = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className={css.flex}>
+           {/*  <div className={css.flex}>
               <TextField
                 size={textfieldSize}
                 name="email"
@@ -116,7 +124,7 @@ const Abmeldung = () => {
                 value={formData.email || ""}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
           </div>
           <div className={css.form_section}>
             <SectionTitle title={t("forms.employeeData")} />
@@ -252,4 +260,10 @@ const Abmeldung = () => {
   );
 };
 
-export default Abmeldung;
+export default function ProtectedAbmeldung() {
+  return (
+    <ProtectedRoute>
+      <Abmeldung />
+    </ProtectedRoute>
+  );
+}

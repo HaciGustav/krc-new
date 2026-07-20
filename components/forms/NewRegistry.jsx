@@ -18,7 +18,8 @@ import ValidationWarningModal from "../form-components/ValidationWarningModal";
 import useFormUtilities from "@/hooks/useFormUtilities";
 import SectionTitle from "../form-components/SectionTitle";
 import { useTranslation } from "react-i18next";
-
+import useFormPrefill from "@/hooks/useFormPrefill";
+  
 const requiredFields = [
   { fieldName: "employer", fieldCaption: "forms.employer" },
   { fieldName: "workAddress", fieldCaption: "forms.workAddress" },
@@ -42,6 +43,9 @@ const NewRegistry = () => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({ minWage: true });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(false);
+
+   //preFill
+    useFormPrefill(setFormData);
 
   const {
     warningModalProps,
@@ -126,7 +130,9 @@ const NewRegistry = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className={css.flex}>
+
+            
+            {/* <div className={css.flex}>
               <TextField
                 name="email"
                 size={textfieldSize}
@@ -137,7 +143,7 @@ const NewRegistry = () => {
                 onChange={handleChange}
               />
               <div className={css.placeholder_div} />
-            </div>
+            </div> */}
           </div>
           <div className={css.form_section}>
             <SectionTitle title={t("forms.employeeData")} />

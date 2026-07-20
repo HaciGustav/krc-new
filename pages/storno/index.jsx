@@ -24,6 +24,12 @@ import useFormUtilities from "@/hooks/useFormUtilities";
 import ValidationWarningModal from "@/components/form-components/ValidationWarningModal";
 import SectionTitle from "@/components/form-components/SectionTitle";
 
+// LOGIN AUTH
+import ProtectedRoute from "@/components/ProtectedRoute";
+import useFormPrefill from "@/hooks/useFormPrefill";
+
+   
+
 const requiredFields = [
   { fieldName: "employer", fieldCaption: "forms.employer" },
   { fieldName: "workAddress", fieldCaption: "forms.workAddress" },
@@ -52,6 +58,9 @@ const Storno = () => {
     typographyFontSize,
   } = useFormUtilities();
 
+  //preFill
+    useFormPrefill(setFormData);
+    
   const handleSubmit = async (event) => {
     event.preventDefault();
     
@@ -108,7 +117,7 @@ const Storno = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className={css.flex}>
+            {/* <div className={css.flex}>
               <TextField
                 name="email"
                 label={t("forms.email")}
@@ -121,7 +130,7 @@ const Storno = () => {
                 onChange={handleChange}
               />
               <div className={css.placeholder_div} />
-            </div>
+            </div> */}
           </div>
           <div className={css.form_section}>
             <SectionTitle title={t("forms.employeeData")} />
@@ -250,4 +259,10 @@ const Storno = () => {
   );
 };
 
-export default Storno;
+export default function ProtectedStornieren() {
+  return (
+    <ProtectedRoute>
+      <Storno />
+    </ProtectedRoute>
+  );
+}

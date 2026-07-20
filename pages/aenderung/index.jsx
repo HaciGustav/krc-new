@@ -9,7 +9,7 @@ import {
   Select,
   Checkbox,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import css from "@/styles/forms.module.css";
 import DateInput from "@/components/form-components/DateInput";
@@ -17,6 +17,10 @@ import useFormCalls from "@/hooks/useFormCalls";
 import useFormUtilities from "@/hooks/useFormUtilities";
 import ValidationWarningModal from "@/components/form-components/ValidationWarningModal";
 import SectionTitle from "@/components/form-components/SectionTitle";
+
+// LOGIN AUTH
+import ProtectedRoute from "@/components/ProtectedRoute";
+import useFormPrefill from "@/hooks/useFormPrefill";
 
 const requiredFields = [
   { fieldName: "employer", fieldCaption: "forms.employer" },
@@ -44,6 +48,10 @@ const Aenderung = () => {
     typographyFontSize,
   } = useFormUtilities();
 
+  //preFill
+  useFormPrefill(setFormData);
+
+  
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     setFormData({
@@ -65,6 +73,8 @@ const Aenderung = () => {
       sendAenderung(formData).then(() => setSubmitButtonDisabled(false));
     }
   };
+
+
 
   return (
     <>
@@ -98,7 +108,7 @@ const Aenderung = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className={css.flex}>
+            {/* <div className={css.flex}>
               <TextField
                 name="email"
                 size={textfieldSize}
@@ -109,7 +119,7 @@ const Aenderung = () => {
                 onChange={handleChange}
               />
               <div className={css.placeholder_div} />
-            </div>
+            </div> */}
           </div>
           <div className={css.form_section}>
             <SectionTitle title={t("forms.employeeData")} />
@@ -356,4 +366,10 @@ const Aenderung = () => {
   );
 };
 
-export default Aenderung;
+export default function ProtectedAenderung() {
+  return (
+    <ProtectedRoute>
+      <Aenderung />
+    </ProtectedRoute>
+  );
+}

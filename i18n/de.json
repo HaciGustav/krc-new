@@ -40,7 +40,7 @@
     "companyData": "Firmendaten/Dienstgeber",
     "employeeData": "Dienstnehmer/in - Arbeiter/in Daten",
     "employer": "Dienstgeber",
-    "workAddress": "Betriebstätte (Arbeitsort)",
+    "workAddress": "Betriebsstätte (Arbeitsort)", 
     "email": "Firmen e-mail",
     "firstNameEmployee": "Vorname DN",
     "lastNameEmployee": "Nachname DN",
